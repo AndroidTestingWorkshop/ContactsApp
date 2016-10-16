@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ContactsApp</string>
     <string name="base_url">http://gojek-contacts-app.herokuapp.com/</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="add_contact">Add Contact</string>
 </resources>
