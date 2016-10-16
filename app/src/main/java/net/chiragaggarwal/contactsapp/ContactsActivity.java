@@ -30,6 +30,7 @@ public class ContactsActivity extends AppCompatActivity {
             @Override
             public void onContactClick(int contactId) {
                 Intent contactIntent = new Intent(ContactsActivity.this, ContactActivity.class);
+                contactIntent.putExtra(Contact.ID, contactId);
                 startActivity(contactIntent);
             }
         });

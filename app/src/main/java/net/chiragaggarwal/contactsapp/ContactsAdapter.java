@@ -12,9 +12,11 @@ import java.util.List;
 public class ContactsAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     private final ArrayList<Contact> contacts;
     private Context context;
+    private OnContactClickListener onContactClickListener;
 
     public ContactsAdapter(Context context, OnContactClickListener onContactClickListener) {
         this.context = context;
+        this.onContactClickListener = onContactClickListener;
         this.contacts = new ArrayList<>();
     }
 
@@ -27,6 +29,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         Contact contact = contacts.get(position);
+        holder.setOnClickListener(onContactClickListener, contact.id);
         holder.bind(contact.firstName, contact.lastName);
     }
 
