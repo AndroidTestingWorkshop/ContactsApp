@@ -15,7 +15,7 @@ public class ContactViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(String firstName, String lastName) {
-        String fullName = firstName + lastName;
+        String fullName = firstName + " " + lastName;
         textName.setText(fullName);
     }
 
