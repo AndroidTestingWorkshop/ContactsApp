@@ -20,14 +20,11 @@ public class Contact {
     @SerializedName("favorite")
     public boolean isFavorite;
 
-    public Contact(int id, String firstName, String lastName, String email, String phoneNumber, String profilePictureUrl, boolean isFavorite) {
-        this.id = id;
+    public Contact(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.profilePictureUrl = profilePictureUrl;
-        this.isFavorite = isFavorite;
     }
 
     @Override

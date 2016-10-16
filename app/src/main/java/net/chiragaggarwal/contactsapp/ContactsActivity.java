@@ -45,7 +45,11 @@ public class ContactsActivity extends AppCompatActivity {
             }
         });
         listContacts.setAdapter(contactsAdapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
