@@ -49,7 +49,7 @@ public class ContactActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Contact contact) {
-                        textName.setText(contact.firstName + contact.lastName);
+                        textName.setText(contact.firstName + " " + contact.lastName);
                         textEmail.setText(contact.email);
                         textPhone.setText(contact.phoneNumber);
                     }
