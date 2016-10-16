@@ -13,7 +13,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     private final ArrayList<Contact> contacts;
     private Context context;
 
-    public ContactsAdapter(Context context) {
+    public ContactsAdapter(Context context, OnContactClickListener onContactClickListener) {
         this.context = context;
         this.contacts = new ArrayList<>();
     }

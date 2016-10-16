@@ -1,5 +1,6 @@
 package net.chiragaggarwal.contactsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,13 @@ public class ContactsActivity extends AppCompatActivity {
 
         listContacts = (RecyclerView) findViewById(R.id.list_contacts);
         listContacts.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        contactsAdapter = new ContactsAdapter(this);
+        contactsAdapter = new ContactsAdapter(this, new OnContactClickListener() {
+            @Override
+            public void onContactClick(int contactId) {
+                Intent contactIntent = new Intent(ContactsActivity.this, ContactActivity.class);
+                startActivity(contactIntent);
+            }
+        });
         listContacts.setAdapter(contactsAdapter);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -40,12 +47,10 @@ public class ContactsActivity extends AppCompatActivity {
                 .subscribe(new Subscriber<List<Contact>>() {
                     @Override
                     public void onCompleted() {
-                        System.out.println();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        System.out.println();
                     }
 
                     @Override
