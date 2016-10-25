@@ -6,9 +6,9 @@
     <string name="email">Email</string>
     <string name="phone">Phone</string>
     <string name="add_contact">Add Contact</string>
-    <string name="error_no_name">Please enter name</string>
-    <string name="error_no_email">Please enter email</string>
-    <string name="error_no_phone">Please enter phone</string>
+    <string name="error_invalid_name">Name should not be less than 2 characters</string>
+    <string name="error_invalid_email">Email should be of valid format</string>
+    <string name="error_invalid_phone">Please enter phone</string>
     <string name="ok">OK</string>
     <string name="contact_created">Contact Created</string>
 </resources>
