@@ -31,4 +31,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
+
 }
