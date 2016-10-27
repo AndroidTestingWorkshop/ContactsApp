@@ -4,9 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import javax.inject.Inject;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -17,22 +16,20 @@ public class ContactActivity extends AppCompatActivity {
     private TextView textPhone;
     private TextView textEmail;
 
+    @Inject
+    public ContactsNetworkService contactsNetworkService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
+        ((ContactsApplication) getApplication()).getContactsComponent().inject(this);
 
         textName = (TextView) findViewById(R.id.text_name);
         textPhone = (TextView) findViewById(R.id.text_phone);
         textEmail = (TextView) findViewById(R.id.text_email);
-
         final int contactId = getIntent().getIntExtra(Contact.ID, DEFAULT_CONTACT_ID);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        ContactsNetworkService contactsNetworkService = retrofit.create(ContactsNetworkService.class);
+
         contactsNetworkService
                 .getContact(contactId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

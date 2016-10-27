@@ -10,9 +10,8 @@ import android.view.View;
 
 import java.util.List;
 
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import javax.inject.Inject;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -21,10 +20,14 @@ public class ContactsActivity extends AppCompatActivity {
     private RecyclerView listContacts;
     private ContactsAdapter contactsAdapter;
 
+    @Inject
+    public ContactsNetworkService contactsNetworkService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+        ((ContactsApplication) getApplication()).getContactsComponent().inject(this);
 
         listContacts = (RecyclerView) findViewById(R.id.list_contacts);
         FloatingActionButton fabAddContact = (FloatingActionButton) findViewById(R.id.fab_add_contact);
@@ -50,12 +53,6 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        ContactsNetworkService contactsNetworkService = retrofit.create(ContactsNetworkService.class);
         contactsNetworkService.getContacts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

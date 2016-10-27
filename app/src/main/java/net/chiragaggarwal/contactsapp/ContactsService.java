@@ -24,7 +24,7 @@ public class ContactsService {
 
                     @Override
                     public void onError(Throwable e) {
-                        callback.onFailure(((HttpException) e));
+                        callback.onFailure(e);
                     }
 
                     @Override
@@ -37,6 +37,6 @@ public class ContactsService {
     public interface CreateContactCallback {
         void onSuccess(Contact contact);
 
-        void onFailure(HttpException e);
+        void onFailure(Throwable e);
     }
 }

@@ -8,12 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.IOException;
-
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.HttpException;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import javax.inject.Inject;
 
 public class AddContactActivity extends AppCompatActivity implements AddContactView {
     private TextView buttonAddContact;
@@ -22,6 +17,9 @@ public class AddContactActivity extends AppCompatActivity implements AddContactV
     private EditText inputEmail;
     private EditText inputPhone;
     private AddContactPresenter addContactPresenter;
+
+    @Inject
+    public ContactsService contactsService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +31,8 @@ public class AddContactActivity extends AppCompatActivity implements AddContactV
         inputEmail = (EditText) findViewById(R.id.input_email);
         inputPhone = (EditText) findViewById(R.id.input_phone);
 
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        final ContactsNetworkService contactsNetworkService = retrofit.create(ContactsNetworkService.class);
-        addContactPresenter = new AddContactPresenter(this, new ContactsService(contactsNetworkService));
+        ((ContactsApplication) getApplication()).getContactsComponent().inject(this);
+        addContactPresenter = new AddContactPresenter(this, contactsService);
 
         buttonAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,18 +48,14 @@ public class AddContactActivity extends AppCompatActivity implements AddContactV
     }
 
     @Override
-    public void onCreateContactError(HttpException e) {
-        try {
+    public void onCreateContactError(String e) {
             new AlertDialog.Builder(AddContactActivity.this)
-                    .setMessage(e.response().errorBody().string())
+                    .setMessage(e)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
                     }).create().show();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
     }
 
     @Override
@@ -79,6 +67,11 @@ public class AddContactActivity extends AppCompatActivity implements AddContactV
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 }).create().show();
+    }
+
+    @Override
+    public void showNoInternetConnectionError() {
+
     }
 
     @Override

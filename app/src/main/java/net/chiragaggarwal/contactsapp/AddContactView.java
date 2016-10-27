@@ -11,7 +11,9 @@ public interface AddContactView {
 
     void onCreateContactSuccess();
 
-    void onCreateContactError(HttpException e);
+    void onCreateContactError(String e);
 
     void showEmailNotValidDialog();
+
+    void showNoInternetConnectionError();
 }

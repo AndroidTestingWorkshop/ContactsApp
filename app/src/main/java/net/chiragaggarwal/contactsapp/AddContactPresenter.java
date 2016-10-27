@@ -1,5 +1,8 @@
 package net.chiragaggarwal.contactsapp;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import retrofit2.adapter.rxjava.HttpException;
 
 public class AddContactPresenter {
@@ -40,8 +43,17 @@ public class AddContactPresenter {
             }
 
             @Override
-            public void onFailure(HttpException e) {
-                view.onCreateContactError(e);
+            public void onFailure(Throwable e) {
+                try {
+                    if (e instanceof UnknownHostException)
+                        view.showNoInternetConnectionError();
+                    else {
+
+                        view.onCreateContactError(((HttpException) e).response().errorBody().string());
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
     }
