@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -17,6 +18,7 @@ public class ContactActivity extends AppCompatActivity {
     private TextView textEmail;
 
     @Inject
+    @Named("cached")
     public ContactsNetworkService contactsNetworkService;
 
     @Override
