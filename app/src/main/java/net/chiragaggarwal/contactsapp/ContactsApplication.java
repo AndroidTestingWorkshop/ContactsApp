@@ -20,4 +20,8 @@ public class ContactsApplication extends Application {
     public ContactsComponent getContactsComponent() {
         return contactsComponent;
     }
+
+    public void setContactsComponent(ContactsComponent contactsComponent) {
+        this.contactsComponent = contactsComponent;
+    }
 }

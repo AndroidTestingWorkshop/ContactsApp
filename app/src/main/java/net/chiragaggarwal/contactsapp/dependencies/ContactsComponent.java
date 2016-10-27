@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, NetworkModule.class})
+@Component(modules = {AppModule.class, ConfigurationModule.class, NetworkModule.class})
 public interface ContactsComponent {
     void inject(AddContactActivity addContactActivity);
 

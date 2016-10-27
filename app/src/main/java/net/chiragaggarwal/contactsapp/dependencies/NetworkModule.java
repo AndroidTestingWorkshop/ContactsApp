@@ -4,7 +4,6 @@ import android.content.Context;
 
 import net.chiragaggarwal.contactsapp.ContactsNetworkService;
 import net.chiragaggarwal.contactsapp.ContactsService;
-import net.chiragaggarwal.contactsapp.R;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -21,9 +20,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
     @Provides
     @Singleton
-    public Retrofit providesRetrofit(Context applicationContext) {
+    public Retrofit providesRetrofit(Configuration configuration) {
         return new Retrofit.Builder()
-                .baseUrl(applicationContext.getString(R.string.base_url))
+                .baseUrl(configuration.getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -41,9 +40,9 @@ public class NetworkModule {
     @Provides
     @Named("cached")
     @Singleton
-    public Retrofit providesCachedRetrofit(Context applicationContext, @Named("cached") OkHttpClient okHttpClient) {
+    public Retrofit providesCachedRetrofit(Configuration configuration, @Named("cached") OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(applicationContext.getString(R.string.base_url))
+                .baseUrl(configuration.getBaseUrl())
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
